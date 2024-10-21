@@ -26,7 +26,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(function Input(
     <>
       <label>
         <input
-          className="font-body rounded-md border-2 border-slate-700 bg-transparent p-2 outline-2 placeholder:font-medium placeholder:text-slate-500 focus-visible:outline focus-visible:outline-slate-700"
+          className="font-body rounded-s-md border-b-2 border-l-2 border-t-2 border-slate-700 bg-transparent p-2 outline-2 placeholder:font-medium placeholder:text-slate-500 focus-visible:border-green-500 focus-visible:outline-none"
           type={type}
           value={value}
           placeholder={placeholder}

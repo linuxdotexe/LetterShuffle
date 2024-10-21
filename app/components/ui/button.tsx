@@ -8,7 +8,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
 export default function Button({ children, props }: ButtonProps) {
   return (
     <button
-      className="h-fit rounded-md bg-green-500 px-2 py-1 text-base font-bold text-slate-950 hover:bg-green-600"
+      className="rounded-md rounded-s-none border-y-2 border-green-500 bg-green-500 p-2 py-[0.64rem] text-base font-bold text-slate-950 hover:border-green-600 hover:bg-green-600"
       {...props}
     >
       {children}

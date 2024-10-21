@@ -5,6 +5,7 @@ import Button from "@/app/components/ui/button";
 import Input from "@/app/components/ui/input";
 import { useContext } from "react";
 import { DataContext } from "../provider";
+import Link from "next/link";
 
 export default function Nav() {
   const { username, setUsername, setFilm } = useContext(DataContext);
@@ -33,7 +34,7 @@ export default function Nav() {
   return (
     <nav className="box-border flex w-full justify-center bg-slate-950 p-6 px-10">
       <div className="flex w-full items-center justify-between gap-2 lg:w-2/3">
-        <div className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2">
           <Image
             src="/logo.svg"
             width={300}
@@ -44,7 +45,7 @@ export default function Nav() {
           <p className="hidden text-4xl font-bold tracking-tighter text-white sm:block">
             LetterShuffle
           </p>
-        </div>
+        </Link>
         <form className="flex items-center gap-0" onSubmit={handleSubmit}>
           <Input
             name="username"

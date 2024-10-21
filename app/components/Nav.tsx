@@ -3,11 +3,11 @@
 import Image from "next/image";
 import Button from "@/app/components/ui/button";
 import Input from "@/app/components/ui/input";
-import { useState } from "react";
+import { useContext } from "react";
+import { DataContext } from "../provider";
 
 export default function Nav() {
-  const [username, setUsername] = useState<string>("");
-  const [film, setFilm] = useState<string>("");
+  const { username, setUsername, setFilm } = useContext(DataContext);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { value } = e.target;
@@ -23,7 +23,6 @@ export default function Nav() {
         const finalList = json.filter((value: string) => value !== null);
         const result = finalList[Math.floor(Math.random() * finalList.length)];
         setFilm(result);
-        console.log(film);
       } catch (error) {
         console.error("Error fetching testimonials:", error);
       }
@@ -32,8 +31,8 @@ export default function Nav() {
   }
 
   return (
-    <nav className="flex w-full justify-center bg-slate-950 p-6 px-10">
-      <div className="flex w-2/3 items-center justify-between gap-2">
+    <nav className="box-border flex w-full justify-center bg-slate-950 p-6 px-10">
+      <div className="flex w-full items-center justify-between gap-2 lg:w-2/3">
         <div className="flex items-center gap-2">
           <Image
             src="/logo.svg"
@@ -42,11 +41,11 @@ export default function Nav() {
             alt="logo"
             className="w-16"
           />
-          <p className="text-4xl font-bold tracking-tighter text-white">
+          <p className="hidden text-4xl font-bold tracking-tighter text-white sm:block">
             LetterShuffle
           </p>
         </div>
-        <form className="flex items-center gap-2" onSubmit={handleSubmit}>
+        <form className="flex items-center gap-0" onSubmit={handleSubmit}>
           <Input
             name="username"
             placeholder="Enter your username"
@@ -54,7 +53,9 @@ export default function Nav() {
             onChange={handleChange}
             isRequired
           />
-          <Button type="submit">Shuffle!</Button>
+          <Button type="submit">
+            <Image src="/shuffle.svg" width={24} height={24} alt="Shuffle!" />
+          </Button>
         </form>
       </div>
     </nav>

@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Nav from "@/app/components/Nav";
+import DataProvider from "./provider";
 
 export const metadata: Metadata = {
-  title: "lbx-shuffle",
+  title: "LetterShuffle",
   description: "Picks a random film out of your insanely huge watchlist.",
   icons: "/icon.svg",
 };
@@ -16,8 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="antialiased">
-        <Nav />
-        {children}
+        <DataProvider>
+          <Nav />
+          {children}
+        </DataProvider>
       </body>
     </html>
   );

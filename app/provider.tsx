@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 interface DataContextType {
   username: string;
@@ -23,6 +23,20 @@ export default function DataProvider({
 }) {
   const [username, setUsername] = useState<string>("");
   const [film, setFilm] = useState<string>("");
+
+  // Load username and film from localStorage when component mounts
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+
+    if (storedUsername) setUsername(storedUsername);
+  }, []);
+
+  // Update localStorage when username changes
+  useEffect(() => {
+    if (username) {
+      localStorage.setItem("username", username);
+    }
+  }, [username]);
 
   return (
     <DataContext.Provider

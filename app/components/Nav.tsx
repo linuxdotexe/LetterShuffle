@@ -1,11 +1,11 @@
 "use client";
 
+import { useContext } from "react";
 import Image from "next/image";
+import Link from "next/link";
+import { DataContext } from "@/app/provider";
 import Button from "@/app/components/ui/button";
 import Input from "@/app/components/ui/input";
-import { useContext } from "react";
-import { DataContext } from "../provider";
-import Link from "next/link";
 
 export default function Nav() {
   const { username, setUsername, setFilm } = useContext(DataContext);
@@ -32,7 +32,7 @@ export default function Nav() {
   }
 
   return (
-    <nav className="box-border flex w-full justify-center bg-slate-950 p-6 px-10">
+    <nav className="flex w-full justify-center bg-slate-950/0 px-4 py-6 sm:px-12">
       <div className="flex w-full items-center justify-between gap-2 lg:w-2/3">
         <Link href="/" className="flex items-center gap-2">
           <Image
@@ -42,7 +42,7 @@ export default function Nav() {
             alt="logo"
             className="w-16"
           />
-          <p className="hidden text-4xl font-bold tracking-tighter text-white sm:block">
+          <p className="hidden text-3xl font-extrabold tracking-tighter text-slate-100 sm:block">
             LetterShuffle
           </p>
         </Link>

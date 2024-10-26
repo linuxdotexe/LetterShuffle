@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
-import "./globals.css";
+import "@/app/globals.css";
 import Nav from "@/app/components/Nav";
-import DataProvider from "./provider";
+import DataProvider from "@/app/provider";
+import Footer from "@/app/components/Footer";
 
 export const metadata: Metadata = {
   title: "LetterShuffle",
@@ -16,12 +17,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased">
-        <DataProvider>
+      <DataProvider>
+        <body className="flex h-screen flex-col justify-between tracking-tight antialiased">
           <Nav />
           {children}
-        </DataProvider>
-      </body>
+          <Footer />
+        </body>
+      </DataProvider>
     </html>
   );
 }

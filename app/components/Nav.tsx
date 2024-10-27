@@ -21,6 +21,7 @@ export default function Nav() {
     setPoster,
     setRuntime,
     setBg,
+    setLoading,
   } = useContext(DataContext);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -32,25 +33,28 @@ export default function Nav() {
     e.preventDefault();
     const fetchData = async () => {
       try {
+        setLoading(true);
         const res = await fetch(`/api/watchlist?username=${username}`);
         const json = await res.json();
         const result = json.data[Math.floor(Math.random() * json.data.length)];
-        setFilm(result.name);
-        setSlug(result.slug);
 
         const boxdRes = await fetch(`/api/boxd?slug=${result.slug}`);
         const boxdJson = await boxdRes.json();
-        setRating(boxdJson.rating);
-        setTrailer(boxdJson.trailer);
 
         const tmdbRes = await fetch(`/api/tmdb?id=${boxdJson.tmdb}`);
         const tmdbJson = await tmdbRes.json();
+
+        setFilm(result.name);
+        setSlug(result.slug);
+        setRating(boxdJson.rating);
+        setTrailer(boxdJson.trailer);
         setYear(tmdbJson.year);
         setTagline(tmdbJson.tagline);
         setDesc(tmdbJson.overview);
         setPoster(tmdbJson.poster);
         setBg(tmdbJson.bg);
         setRuntime(tmdbJson.runtime);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching testimonials:", error);
       }

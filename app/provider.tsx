@@ -15,6 +15,7 @@ interface DataContextType {
   poster: string;
   bg: string;
   runtime: string;
+  loading: boolean;
   setUsername: (value: string) => void;
   setFilm: (value: string) => void;
   setSlug: (value: string) => void;
@@ -27,6 +28,7 @@ interface DataContextType {
   setPoster: (value: string) => void;
   setBg: (value: string) => void;
   setRuntime: (value: string) => void;
+  setLoading: (value: boolean) => void;
 }
 
 export const DataContext = createContext<DataContextType>({
@@ -42,6 +44,7 @@ export const DataContext = createContext<DataContextType>({
   poster: "",
   bg: "",
   runtime: "",
+  loading: true, // Initial loading state
   setUsername: () => {},
   setFilm: () => {},
   setSlug: () => {},
@@ -54,6 +57,7 @@ export const DataContext = createContext<DataContextType>({
   setPoster: () => {},
   setBg: () => {},
   setRuntime: () => {},
+  setLoading: () => {},
 });
 
 export default function DataProvider({
@@ -73,44 +77,51 @@ export default function DataProvider({
   const [poster, setPoster] = useState<string>("");
   const [runtime, setRuntime] = useState<string>("");
   const [bg, setBg] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
 
   // Retrieve values from localStorage on initial render
   useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
-    if (storedUsername) setUsername(storedUsername);
+    const fetchData = async () => {
+      const storedUsername = localStorage.getItem("username");
+      if (storedUsername) setUsername(storedUsername);
 
-    const storedFilm = localStorage.getItem("film");
-    if (storedFilm) setFilm(storedFilm);
+      const storedFilm = localStorage.getItem("film");
+      if (storedFilm) setFilm(storedFilm);
 
-    const storedSlug = localStorage.getItem("slug");
-    if (storedSlug) setSlug(storedSlug);
+      const storedSlug = localStorage.getItem("slug");
+      if (storedSlug) setSlug(storedSlug);
 
-    const storedRating = localStorage.getItem("rating");
-    if (storedRating) setRating(storedRating);
+      const storedRating = localStorage.getItem("rating");
+      if (storedRating) setRating(storedRating);
 
-    const storedTmdb = localStorage.getItem("tmdb");
-    if (storedTmdb) setTmdb(storedTmdb);
+      const storedTmdb = localStorage.getItem("tmdb");
+      if (storedTmdb) setTmdb(storedTmdb);
 
-    const storedTrailer = localStorage.getItem("trailer");
-    if (storedTrailer) setTrailer(storedTrailer);
+      const storedTrailer = localStorage.getItem("trailer");
+      if (storedTrailer) setTrailer(storedTrailer);
 
-    const storedYear = localStorage.getItem("year");
-    if (storedYear) setYear(storedYear);
+      const storedYear = localStorage.getItem("year");
+      if (storedYear) setYear(storedYear);
 
-    const storedTagline = localStorage.getItem("tagline");
-    if (storedTagline) setTagline(storedTagline);
+      const storedTagline = localStorage.getItem("tagline");
+      if (storedTagline) setTagline(storedTagline);
 
-    const storedDesc = localStorage.getItem("desc");
-    if (storedDesc) setDesc(storedDesc);
+      const storedDesc = localStorage.getItem("desc");
+      if (storedDesc) setDesc(storedDesc);
 
-    const storedPoster = localStorage.getItem("poster");
-    if (storedPoster) setPoster(storedPoster);
+      const storedPoster = localStorage.getItem("poster");
+      if (storedPoster) setPoster(storedPoster);
 
-    const storedRuntime = localStorage.getItem("runtime");
-    if (storedRuntime) setRuntime(storedRuntime);
+      const storedRuntime = localStorage.getItem("runtime");
+      if (storedRuntime) setRuntime(storedRuntime);
 
-    const storedBg = localStorage.getItem("bg");
-    if (storedBg) setBg(storedBg);
+      const storedBg = localStorage.getItem("bg");
+      if (storedBg) setBg(storedBg);
+
+      setLoading(false); // Set loading to false after fetching data
+    };
+
+    fetchData();
   }, []);
 
   // Update localStorage when dependencies change
@@ -145,30 +156,32 @@ export default function DataProvider({
   return (
     <DataContext.Provider
       value={{
-        username: username,
-        film: film,
-        slug: slug,
-        rating: rating,
-        tmdb: tmdb,
-        trailer: trailer,
-        year: year,
-        tagline: tagline,
-        desc: desc,
-        poster: poster,
-        runtime: runtime,
-        bg: bg,
-        setUsername: setUsername,
-        setFilm: setFilm,
-        setSlug: setSlug,
-        setRating: setRating,
-        setTmdb: setTmdb,
-        setTrailer: setTrailer,
-        setYear: setYear,
-        setTagline: setTagline,
-        setDesc: setDesc,
-        setPoster: setPoster,
-        setRuntime: setRuntime,
-        setBg: setBg,
+        username,
+        film,
+        slug,
+        rating,
+        tmdb,
+        trailer,
+        year,
+        tagline,
+        desc,
+        poster,
+        runtime,
+        bg,
+        loading,
+        setUsername,
+        setFilm,
+        setSlug,
+        setRating,
+        setTmdb,
+        setTrailer,
+        setYear,
+        setTagline,
+        setDesc,
+        setPoster,
+        setRuntime,
+        setBg,
+        setLoading,
       }}
     >
       {children}

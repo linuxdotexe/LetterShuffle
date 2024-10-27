@@ -21,6 +21,8 @@ export default function Anchor({
     <Link
       className={`group inline-flex items-center font-medium ${small ? "text-sm lg:text-base" : "text-base lg:text-lg"} ${className}`}
       href={href}
+      target={`${isExternal ? "blank" : ""}`}
+      rel={`${isExternal ? "noreferrer" : ""}`}
       {...props}
     >
       {children}

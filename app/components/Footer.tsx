@@ -15,7 +15,7 @@ export default function Footer() {
             Sai Nivas Mangu
           </Anchor>
           <br />
-          <div className="flex gap-2">
+          <div className="mt-2 flex flex-col flex-wrap gap-2 md:flex-row md:flex-nowrap">
             <Anchor
               href="https://letterboxd.com/kenough_"
               className="text-green-400 hover:text-green-600"

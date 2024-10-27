@@ -8,7 +8,20 @@ import Button from "@/app/components/ui/button";
 import Input from "@/app/components/ui/input";
 
 export default function Nav() {
-  const { username, setUsername, setFilm } = useContext(DataContext);
+  const {
+    username,
+    setUsername,
+    setFilm,
+    setSlug,
+    setRating,
+    setTrailer,
+    setYear,
+    setTagline,
+    setDesc,
+    setPoster,
+    setRuntime,
+    setBg,
+  } = useContext(DataContext);
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { value } = e.target;
@@ -21,9 +34,23 @@ export default function Nav() {
       try {
         const res = await fetch(`/api/watchlist?username=${username}`);
         const json = await res.json();
-        const finalList = json.filter((value: string) => value !== null);
-        const result = finalList[Math.floor(Math.random() * finalList.length)];
-        setFilm(result);
+        const result = json.data[Math.floor(Math.random() * json.data.length)];
+        setFilm(result.name);
+        setSlug(result.slug);
+
+        const boxdRes = await fetch(`/api/boxd?slug=${result.slug}`);
+        const boxdJson = await boxdRes.json();
+        setRating(boxdJson.rating);
+        setTrailer(boxdJson.trailer);
+
+        const tmdbRes = await fetch(`/api/tmdb?id=${boxdJson.tmdb}`);
+        const tmdbJson = await tmdbRes.json();
+        setYear(tmdbJson.year);
+        setTagline(tmdbJson.tagline);
+        setDesc(tmdbJson.overview);
+        setPoster(tmdbJson.poster);
+        setBg(tmdbJson.bg);
+        setRuntime(tmdbJson.runtime);
       } catch (error) {
         console.error("Error fetching testimonials:", error);
       }

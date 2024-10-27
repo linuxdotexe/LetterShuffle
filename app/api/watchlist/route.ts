@@ -1,7 +1,8 @@
 import * as cheerio from "cheerio";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(request: Request) {
-  const { searchParams } = new URL(request.url);
+export async function GET(request: NextRequest) {
+  const searchParams = request.nextUrl.searchParams;
   const headers = new Headers();
   headers.set("Cookie", "filmFilter=hide-unreleased");
   // fetching the first page
@@ -27,25 +28,28 @@ export async function GET(request: Request) {
         .find("a")
         .text(),
     );
-    const data: string[] = [];
+    const data: { name: string; slug: string }[] = [];
     for (let i = 1; i <= numOfPages; i++) {
       const pageHtml = await fetch(`${url}/page/${i}`, {
         next: { revalidate: 3600 },
       }).then((res) => res.text());
       const $$ = cheerio.load(pageHtml);
 
-      $$(".poster").each((index, element) => {
-        const slug = $$(element).find("img").attr("alt") as string;
-        data.push(slug); // Adjust index based on the page number
+      $$("div.film-poster").each((index, element) => {
+        const name = $$(element).find("img").attr("alt") as string;
+        const slug = $$(element).attr("data-film-slug") as string;
+        data.push({ name: name, slug: slug }); // Adjust index based on the page number
       });
     }
     // fetch each page and load up data
-    $("div.poster").each((index, element) => {
-      const slug = $(element).find("img").attr("alt") as string;
-      data[index] = slug;
+    $("div.film-poster").each((index, element) => {
+      const name = $(element).find("img").attr("alt") as string;
+      const slug = $(element).attr("data-film-slug") as string;
+      data[index] = { name: name, slug: slug };
     });
 
-    return new Response(JSON.stringify(data), {
+    return NextResponse.json({
+      data,
       status: 200,
       headers: {
         "Content-Type": "application/json",
@@ -53,14 +57,12 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     console.error("Error fetching HTML data:", error);
-    return new Response(
-      JSON.stringify({ error: "Failed to fetch HTML data" }),
-      {
-        status: 500,
-        headers: {
-          "Content-Type": "application/json",
-        },
+    return NextResponse.json({
+      error: "Failed to fetch HTML data",
+      status: 500,
+      headers: {
+        "Content-Type": "application/json",
       },
-    );
+    });
   }
 }

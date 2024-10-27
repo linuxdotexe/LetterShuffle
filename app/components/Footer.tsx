@@ -53,7 +53,7 @@ export default function Footer() {
         </div>
         <div className="flex gap-2 lg:gap-12">
           <Anchor
-            href="/"
+            href="https://letterboxd.com"
             className="font-semibold tracking-tight text-slate-300"
             small
             isExternal
@@ -61,7 +61,7 @@ export default function Footer() {
             Letterboxd
           </Anchor>
           <Anchor
-            href="/"
+            href="https://themoviedb.org"
             className="font-semibold tracking-tight text-slate-300"
             small
             isExternal

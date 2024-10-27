@@ -81,20 +81,28 @@ export default function Hero() {
           </div>
 
           <div className="flex gap-4 text-base md:text-lg">
-            <Anchor
-              href={`https://letterboxd.com/film/${slug}`}
-              isExternal
-              className="text-green-500 hover:text-green-600"
-            >
-              Letterboxd
-            </Anchor>
-            <Anchor
-              href={trailer ? `https://youtube.com/watch?v=${trailer}` : ""}
-              isExternal
-              className="text-red-500 hover:text-red-600"
-            >
-              Trailer
-            </Anchor>
+            {loading || !slug ? (
+              <div className="animated-pulse h-3 w-20 rounded-md bg-slate-600"></div>
+            ) : (
+              <Anchor
+                href={`https://letterboxd.com/film/${slug}`}
+                isExternal
+                className="text-green-500 hover:text-green-600"
+              >
+                Letterboxd
+              </Anchor>
+            )}
+            {loading || !trailer ? (
+              <div className="animated-pulse h-3 w-20 rounded-md bg-slate-600"></div>
+            ) : (
+              <Anchor
+                href={trailer ? `https://youtube.com/watch?v=${trailer}` : ""}
+                isExternal
+                className="text-red-500 hover:text-red-600"
+              >
+                Trailer
+              </Anchor>
+            )}
           </div>
         </div>
       </div>

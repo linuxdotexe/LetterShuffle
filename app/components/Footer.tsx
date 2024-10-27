@@ -8,7 +8,8 @@ export default function Footer() {
           Made with {"<3"} for the community by{" "}
           <Anchor
             small
-            isExternal
+            // isExternal
+            // ! update when you finally make that portfolio
             href="/"
             className="text-yellow-300 hover:text-yellow-400"
           >

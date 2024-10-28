@@ -50,19 +50,20 @@ function makeJson(data: string) {
     const obj: Movie = JSON.parse(data);
     return obj;
   } catch (err) {
+    console.error(err);
     throw new Error("Cannot parse data to JSON");
   }
 }
 function getOpenCloseBraces(scriptTagText: string) {
-  var openBrace = -1;
-  var closeBrace = -1;
-  for (var i = 0; i < scriptTagText.length; i++) {
+  let openBrace = -1;
+  let closeBrace = -1;
+  for (let i = 0; i < scriptTagText.length; i++) {
     if (scriptTagText[i] == "{") {
       openBrace = i;
       break;
     }
   }
-  for (var i = scriptTagText.length - 1; i >= 0; i--) {
+  for (let i = scriptTagText.length - 1; i >= 0; i--) {
     if (scriptTagText[i] == "}") {
       closeBrace = i;
       break;

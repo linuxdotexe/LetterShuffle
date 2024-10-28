@@ -44,7 +44,7 @@ export const DataContext = createContext<DataContextType>({
   poster: "",
   bg: "",
   runtime: "",
-  loading: true, // Initial loading state
+  loading: true,
   setUsername: () => {},
   setFilm: () => {},
   setSlug: () => {},
@@ -118,7 +118,7 @@ export default function DataProvider({
       const storedBg = localStorage.getItem("bg");
       if (storedBg) setBg(storedBg);
 
-      setLoading(false); // Set loading to false after fetching data
+      setLoading(false);
     };
 
     fetchData();

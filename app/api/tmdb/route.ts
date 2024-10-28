@@ -13,6 +13,7 @@ export async function GET(request: NextRequest) {
         accept: "application/json",
         Authorization: `Bearer ${process.env.TMDB_API_KEY}`,
       },
+      cache: "force-cache",
       next: { revalidate: 3600 },
     });
 

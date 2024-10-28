@@ -74,12 +74,12 @@ function getOpenCloseBraces(scriptTagText: string) {
 }
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  // fetching the first page
   const slug = searchParams.get("slug");
   const url = "https://letterboxd.com/film/" + slug;
   try {
     const response = await fetch(`${url}`, {
       method: "GET",
+      cache: "force-cache",
       next: { revalidate: 3600 },
       headers: {
         "User-Agent":
